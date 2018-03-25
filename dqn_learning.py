@@ -21,7 +21,7 @@ def learning(
         q_func,
         lr=5e-4,
         max_timesteps=100000,
-        buffer_size=50000,
+        buffer_size=500000,
         exploration_fraction=0.1,
         exploration_final_eps=0.02,
         train_freq=1,
