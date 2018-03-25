@@ -8,8 +8,9 @@ from baselines.common import set_global_seeds
 from baselines import bench
 from baselines.common.atari_wrappers import make_atari
 from baselines import deepq
-from dqn_learning import learning
+from dqn_learning import dqn_learning
 from dqn_learning_max_reward import learning_max_reward
+from baselines.deepq.simple import learn
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
@@ -29,7 +30,23 @@ def main():
         hiddens=[256],
         dueling=bool(args.dueling),
     )
-    # act = learning(
+
+    # act = learn(
+    #     env,
+    #     q_func=model,
+    #     lr=1e-4,
+    #     max_timesteps=args.num_timesteps,
+    #     buffer_size=100000,
+    #     exploration_fraction=0.1,
+    #     exploration_final_eps=0.01,
+    #     train_freq=4,
+    #     learning_starts=10000,
+    #     target_network_update_freq=1000,
+    #     gamma=0.99,
+    #     prioritized_replay=bool(args.prioritized)
+    # )
+
+    # act = dqn_learning(
     #     env,
     #     q_func=model,
     #     lr=1e-4,

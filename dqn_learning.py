@@ -16,7 +16,7 @@ from baselines.deepq.simple import ActWrapper
 from baselines.common.schedules import LinearSchedule
 from baselines.deepq.replay_buffer import ReplayBuffer, PrioritizedReplayBuffer
 
-def learning(
+def dqn_learning(
         env,
         q_func,
         lr=5e-4,
