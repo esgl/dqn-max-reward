@@ -10,7 +10,9 @@ from baselines.common.atari_wrappers import make_atari
 from baselines import deepq
 from dqn_learning import dqn_learning
 from dqn_learning_max_reward import learning_max_reward
+from dqn_learning_max_reward_delay import learning_max_reward_delay
 from baselines.deepq.simple import learn
+from dqn_learning_max_action_reward import learning_max_action_reward
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
@@ -30,51 +32,82 @@ def main():
         hiddens=[256],
         dueling=bool(args.dueling),
     )
-
-    # act = learn(
-    #     env,
-    #     q_func=model,
-    #     lr=1e-4,
-    #     max_timesteps=args.num_timesteps,
-    #     buffer_size=100000,
-    #     exploration_fraction=0.1,
-    #     exploration_final_eps=0.01,
-    #     train_freq=4,
-    #     learning_starts=10000,
-    #     target_network_update_freq=1000,
-    #     gamma=0.99,
-    #     prioritized_replay=bool(args.prioritized)
-    # )
-
-    # act = dqn_learning(
-    #     env,
-    #     q_func=model,
-    #     lr=1e-4,
-    #     max_timesteps=args.num_timesteps,
-    #     buffer_size=10000,
-    #     exploration_fraction=0.1,
-    #     exploration_final_eps=0.01,
-    #     train_freq=4,
-    #     learning_starts=10000,
-    #     target_network_update_freq=1000,
-    #     gamma=0.99,
-    #     prioritized_replay=bool(args.prioritized)
-    # )
-
-    act = learning_max_reward(
-        env,
-        q_func=model,
-        lr=1e-4,
-        max_timesteps=args.num_timesteps,
-        buffer_size=10000,
-        exploration_fraction=0.1,
-        exploration_final_eps=0.01,
-        train_freq=4,
-        learning_starts=10000,
-        target_network_update_freq=1000,
-        gamma=0.99,
-        prioritized_replay=bool(args.prioritized)
-    )
+    option = 5
+    if option == 1:
+        act = learn(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=100000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
+    elif option == 2:
+        act = dqn_learning(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=10000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
+    elif option == 3:
+        act = learning_max_reward(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=10000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
+    elif option == 4:
+        act = learning_max_reward_delay(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=10000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
+    elif option == 5:
+        act = learning_max_action_reward(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=50000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
     env.close()
 
 if __name__ == '__main__':

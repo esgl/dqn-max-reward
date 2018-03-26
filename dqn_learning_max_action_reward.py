@@ -8,18 +8,18 @@ import tempfile
 import os
 import sys
 
-from baselines import deepq
 from baselines import logger
 import baselines.common.tf_util as U
 from baselines.deepq.simple import ActWrapper
-from ReplayBuffer_MaxReward import ReplayBuffer_MaxReward, PrioritizedReplayBuffer_MaxReward
 from baselines.common.schedules import LinearSchedule
+from ReplayBuffer_MaxReward import ReplayBuffer_MaxReward, PrioritizedReplayBuffer_MaxReward
+from build_graph import build_train
 
-def learning_max_reward(
+def learning_max_action_reward(
         env,
         q_func,
         lr=5e-4,
-        max_timesteps=100000,
+        max_timesteps=10000000,
         buffer_size=50000,
         exploration_fraction=0.1,
         exploration_final_eps=0.02,
@@ -36,17 +36,16 @@ def learning_max_reward(
         prioritized_replay_beta_iters=None,
         prioritized_replay_eps=1e-6,
         param_noise=False,
-        callback=None):
-
+        callback=None
+):
     logger.log(sys._getframe().f_code.co_name)
     sess = tf.Session()
     sess.__enter__()
-
     observation_space_shape = env.observation_space.shape
     def make_obs_ph(name):
         return U.BatchInput(observation_space_shape, name=name)
 
-    act, train, update_target, debug = deepq.build_train(
+    act, train, update_target, debug, q_val_f = build_train(
         make_obs_ph=make_obs_ph,
         q_func=q_func,
         num_actions=env.action_space.n,
@@ -55,16 +54,18 @@ def learning_max_reward(
         grad_norm_clipping=10,
         param_noise=param_noise
     )
+
     act_params = {
-        "make_obs_ph" : make_obs_ph,
-        "q_func" : q_func,
-        "num_actions" : env.action_space.n
+        "make_obs_ph": make_obs_ph,
+        "q_func": q_func,
+        "num_actions": env.action_space.n
     }
 
     act = ActWrapper(act, act_params)
 
     if prioritized_replay:
-        replay_buffer = PrioritizedReplayBuffer_MaxReward(buffer_size, alpha=prioritized_replay_alpha)
+        replay_buffer = PrioritizedReplayBuffer_MaxReward(
+            buffer_size, alpha=prioritized_replay_alpha)
         if prioritized_replay_beta_iters is None:
             prioritized_replay_beta_iters = max_timesteps
         beta_schedule = LinearSchedule(prioritized_replay_beta_iters,
@@ -74,11 +75,9 @@ def learning_max_reward(
         replay_buffer = ReplayBuffer_MaxReward(buffer_size)
         beta_schedule = None
 
-    exploration = LinearSchedule(
-        schedule_timesteps=int(exploration_fraction * max_timesteps),
-        initial_p=1.0,
-        final_p=exploration_final_eps
-    )
+    exploration = LinearSchedule(schedule_timesteps=int(exploration_fraction * max_timesteps),
+                                 initial_p=1.0,
+                                 final_p=exploration_final_eps)
 
     U.initialize()
     update_target()
@@ -100,46 +99,39 @@ def learning_max_reward(
             kwargs = {}
             if not param_noise:
                 update_eps = exploration.value(t)
-                update_param_noise_threshold = 0.
+                update_param_noise_threshlod = 0.
             else:
                 update_eps = 0.
-
-                update_param_noise_threshold = -np.log(1.0 - exploration.value(t) +
+                update_param_noise_threshlod = -np.log(1.0 - exploration.value(t) +
                                                        exploration.value(t) / float(env.action_space.n))
                 kwargs["reset"] = reset
-                kwargs["update_param_noise_threshold"] = update_param_noise_threshold
+                kwargs["update_param_noise_threshlod"] = update_param_noise_threshlod
                 kwargs["update_param_noise_scale"] = True
 
             action = act(np.array(obs)[None], update_eps, **kwargs)[0]
-            # print("action: ", action)
+
+            q_vals = q_val_f(np.array(obs)[None])[0]
+            q_action_val = q_vals[action]
             env_action = action
             reset = False
             new_obs, rew, done, _ = env.step(env_action)
-            episode.append((obs, env_action, rew, new_obs, float(done)))
+            replay_buffer.add(obs, action, rew, new_obs, float(done), q_action_val)
+
             obs = new_obs
 
             episode_reward[-1] += rew
             if done:
                 obs = env.reset()
-                # print("episode_reward: ", episode_reward)
                 reset = True
-                episode_return = episode_reward[-1]
-                for idx in range(len(episode)):
-                    obs, env_action, rew, new_obs, done = episode[idx]
-                    _return = episode_return
-                    replay_buffer.add(obs, env_action, rew, new_obs, done, _return)
-                # print("size of replay_buffer : %d" % (replay_buffer.__len__()))
-                episode = []
                 episode_reward.append(0.0)
 
             if t > learning_starts and t % train_freq == 0:
                 if prioritized_replay:
                     experience = replay_buffer.sample(batch_size, beta=beta_schedule.value(t))
                     (obses_t, actions, rewards, obses_tp1, dones, weights, batch_idxes) = experience
-
                 else:
                     obses_t, actions, rewards, obses_tp1, dones = replay_buffer.sample(batch_size)
-                    weights, batch_idxes = np.ones_like(rewards), None
+                    weigths, batch_idxes = np.ones_like(rewards), None
                 td_errors = train(obses_t, actions, rewards, obses_tp1, dones, weights)
                 if prioritized_replay:
                     new_prioritized = np.abs(td_errors) + prioritized_replay_eps
@@ -148,7 +140,7 @@ def learning_max_reward(
             if t > learning_starts and t % target_network_update_freq == 0:
                 update_target()
 
-            mean_100ep_reward = round(np.mean(episode_reward[-101:-1]), 1)
+            mean_100ep_reward = round(np.mean(episode_reward[-101: -1]), 1)
             num_episodes = len(episode_reward)
             if done and print_freq is not None and len(episode_reward) % print_freq == 0:
                 logger.record_tabular("steps", t)
@@ -174,6 +166,37 @@ def learning_max_reward(
             U.load_state(model_file)
 
     return act
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

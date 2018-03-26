@@ -12,10 +12,10 @@ from baselines import deepq
 from baselines import logger
 import baselines.common.tf_util as U
 from baselines.deepq.simple import ActWrapper
-from ReplayBuffer_MaxReward import ReplayBuffer_MaxReward, PrioritizedReplayBuffer_MaxReward
 from baselines.common.schedules import LinearSchedule
-
-def learning_max_reward(
+from ReplayBuffer_MaxReward_Delay import ReplayBuffer_MaxReward_Delay, PrioritizedReplayBuffer_MaxReplay_Delay
+from build_graph import build_train
+def learning_max_reward_delay(
         env,
         q_func,
         lr=5e-4,
@@ -46,7 +46,16 @@ def learning_max_reward(
     def make_obs_ph(name):
         return U.BatchInput(observation_space_shape, name=name)
 
-    act, train, update_target, debug = deepq.build_train(
+    # act, train, update_target, debug = deepq.build_train(
+    #     make_obs_ph=make_obs_ph,
+    #     q_func=q_func,
+    #     num_actions=env.action_space.n,
+    #     optimizer=tf.train.AdamOptimizer(learning_rate=lr),
+    #     gamma=gamma,
+    #     grad_norm_clipping=10,
+    #     param_noise=param_noise
+    # )
+    act, train, update_target, debug, q_val_f = build_train(
         make_obs_ph=make_obs_ph,
         q_func=q_func,
         num_actions=env.action_space.n,
@@ -55,6 +64,7 @@ def learning_max_reward(
         grad_norm_clipping=10,
         param_noise=param_noise
     )
+
     act_params = {
         "make_obs_ph" : make_obs_ph,
         "q_func" : q_func,
@@ -63,15 +73,16 @@ def learning_max_reward(
 
     act = ActWrapper(act, act_params)
 
+    delay = int(max_timesteps / 2)
     if prioritized_replay:
-        replay_buffer = PrioritizedReplayBuffer_MaxReward(buffer_size, alpha=prioritized_replay_alpha)
+        replay_buffer = PrioritizedReplayBuffer_MaxReplay_Delay(buffer_size, delay=delay, alpha=prioritized_replay_alpha)
         if prioritized_replay_beta_iters is None:
             prioritized_replay_beta_iters = max_timesteps
         beta_schedule = LinearSchedule(prioritized_replay_beta_iters,
                                        initial_p=prioritized_replay_beta0,
                                        final_p=1.0)
     else:
-        replay_buffer = ReplayBuffer_MaxReward(buffer_size)
+        replay_buffer = ReplayBuffer_MaxReward_Delay(buffer_size, delay=delay)
         beta_schedule = None
 
     exploration = LinearSchedule(
@@ -115,7 +126,10 @@ def learning_max_reward(
             env_action = action
             reset = False
             new_obs, rew, done, _ = env.step(env_action)
-            episode.append((obs, env_action, rew, new_obs, float(done)))
+            if t < delay:
+                replay_buffer.add(obs, action, rew, new_obs, float(done), -100)
+            else:
+                episode.append((obs, env_action, rew, new_obs, float(done)))
             obs = new_obs
 
             episode_reward[-1] += rew
@@ -124,12 +138,13 @@ def learning_max_reward(
                 # print("episode_reward: ", episode_reward)
                 reset = True
                 episode_return = episode_reward[-1]
-                for idx in range(len(episode)):
-                    obs, env_action, rew, new_obs, done = episode[idx]
-                    _return = episode_return
-                    replay_buffer.add(obs, env_action, rew, new_obs, done, _return)
-                # print("size of replay_buffer : %d" % (replay_buffer.__len__()))
-                episode = []
+                if t >= delay:
+                    for idx in range(len(episode)):
+                        obs, env_action, rew, new_obs, done = episode[idx]
+                        _return = episode_return
+                        replay_buffer.add(obs, env_action, rew, new_obs, done, _return)
+                    # print("size of replay_buffer : %d" % (replay_buffer.__len__()))
+                    episode = []
                 episode_reward.append(0.0)
 
             if t > learning_starts and t % train_freq == 0:
