@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5de96b6a-f9ec-4a3e-8f26-979764c53d23" name="Default" comment="2" />
+    <list default="true" id="5de96b6a-f9ec-4a3e-8f26-979764c53d23" name="Default" comment="2">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReplayBuffer_MaxReward.py" afterPath="$PROJECT_DIR$/ReplayBuffer_MaxReward.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/dqn_maxreward_memory$main.coverage" NAME="main Coverage Results" MODIFIED="1522075669633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/dqn_maxreward_memory$main.coverage" NAME="main Coverage Results" MODIFIED="1522076255273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dqn_maxreward_memory$run_atari.coverage" NAME="run_atari Coverage Results" MODIFIED="1521725032303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/dqn_maxreward_memory$test_replay_buffer.coverage" NAME="test_replay_buffer Coverage Results" MODIFIED="1521898822775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -94,8 +96,8 @@
           <file leaf-file-name="ReplayBuffer_MaxReward.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ReplayBuffer_MaxReward.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="102">
-                  <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+                <state relative-caret-position="289">
+                  <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
                   <folding>
                     <element signature="e#0#37#0" expanded="true" />
                   </folding>
@@ -128,10 +130,10 @@
         <option value="$USER_HOME$/tools/baselines/baselines/deepq/build_graph.py" />
         <option value="$PROJECT_DIR$/build_graph.py" />
         <option value="$PROJECT_DIR$/dqn_learning_max_reward_delay.py" />
-        <option value="$PROJECT_DIR$/ReplayBuffer_MaxReward.py" />
         <option value="$PROJECT_DIR$/dqn_learning_max_reward.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/dqn_learning_max_action_reward.py" />
+        <option value="$PROJECT_DIR$/ReplayBuffer_MaxReward.py" />
       </list>
     </option>
   </component>
@@ -573,7 +575,7 @@
         <state relative-caret-position="-1275">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -667,7 +669,7 @@
         <state relative-caret-position="1190">
           <caret line="70" column="38" lean-forward="false" selection-start-line="70" selection-start-column="38" selection-end-line="70" selection-end-column="38" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -695,7 +697,7 @@
         <state relative-caret-position="561">
           <caret line="134" column="30" lean-forward="true" selection-start-line="134" selection-start-column="30" selection-end-line="134" selection-end-column="30" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -732,8 +734,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ReplayBuffer_MaxReward.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="289">
+          <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>

@@ -29,7 +29,8 @@ class ReplayBuffer_MaxReward(object):
         else:
             if _return > np.min(self._return):
                 self._next_idx = np.argmin(self._return)
-                self._storage[self._next_idx] = data
+                self._storage[self._next_idx] = datals
+                
                 self._return[self._next_idx] = _return
         self._next_idx = (self._next_idx + 1) % self._maxsize
 
