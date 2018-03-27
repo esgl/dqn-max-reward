@@ -15,12 +15,12 @@ from baselines.deepq.simple import learn
 from dqn_learning_max_action_reward import learning_max_action_reward
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    # parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
-    parser.add_argument("--env", help="environment ID", default="PongNoFrameskip-v0")
+    parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
+    #parser.add_argument("--env", help="environment ID", default="PongNoFrameskip-v0")
     parser.add_argument("--seed", help="RNG seed", type=int, default=0)
     parser.add_argument("--prioritized", type=int, default=1)
     parser.add_argument("--dueling", type=int, default=1)
-    parser.add_argument("--num_timesteps", type=int, default=int(10e6))
+    parser.add_argument("--num_timesteps", type=int, default=int(2*10e6))
     args = parser.parse_args()
     logger.configure()
     set_global_seeds(args.seed)
@@ -32,7 +32,7 @@ def main():
         hiddens=[256],
         dueling=bool(args.dueling),
     )
-    option = 5
+    option = 1
     if option == 1:
         act = learn(
             env,
