@@ -13,10 +13,11 @@ from dqn_learning_max_reward import learning_max_reward
 from dqn_learning_max_reward_delay import learning_max_reward_delay
 from baselines.deepq.simple import learn
 from dqn_learning_max_action_reward import learning_max_action_reward
+from dqn_reward_shaping import learning_reward_shaping
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
-    #parser.add_argument("--env", help="environment ID", default="PongNoFrameskip-v0")
+    # parser.add_argument("--env", help="environment ID", default="BreakoutNoFrameskip-v4")
+    parser.add_argument("--env", help="environment ID", default="PongNoFrameskip-v0")
     parser.add_argument("--seed", help="RNG seed", type=int, default=0)
     parser.add_argument("--prioritized", type=int, default=1)
     parser.add_argument("--dueling", type=int, default=1)
@@ -32,14 +33,14 @@ def main():
         hiddens=[256],
         dueling=bool(args.dueling),
     )
-    option = 1
+    option = 6
     if option == 1:
         act = learn(
             env,
             q_func=model,
             lr=1e-4,
             max_timesteps=args.num_timesteps,
-            buffer_size=100000,
+            buffer_size=500000,
             exploration_fraction=0.1,
             exploration_final_eps=0.01,
             train_freq=4,
@@ -95,6 +96,21 @@ def main():
         )
     elif option == 5:
         act = learning_max_action_reward(
+            env,
+            q_func=model,
+            lr=1e-4,
+            max_timesteps=args.num_timesteps,
+            buffer_size=50000,
+            exploration_fraction=0.1,
+            exploration_final_eps=0.01,
+            train_freq=4,
+            learning_starts=10000,
+            target_network_update_freq=1000,
+            gamma=0.99,
+            prioritized_replay=bool(args.prioritized)
+        )
+    elif option == 6:
+        act = learning_reward_shaping(
             env,
             q_func=model,
             lr=1e-4,
