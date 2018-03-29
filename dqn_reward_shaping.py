@@ -130,7 +130,7 @@ def learning_reward_shaping(
                     obs_tmp, action_tmp, rew_tmp, new_obs_tmp, done_tmp = episode[len(episode) - i - 1]
                     # reward = round(reward * gamma_shape_reward, 5)
                     reward = round(reward * gamma_shape_t, 5)
-                    rew_tmp = rew_tmp + rewards
+                    rew_tmp = rew_tmp + reward
                     replay_buffer.add(obs_tmp, action_tmp, rew_tmp, new_obs_tmp, float(done))
                 episode = []
             obs = new_obs

@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--seed", help="RNG seed", type=int, default=0)
     parser.add_argument("--prioritized", type=int, default=1)
     parser.add_argument("--dueling", type=int, default=1)
-    parser.add_argument("--num_timesteps", type=int, default=int(2*10e6))
+    parser.add_argument("--num_timesteps", type=int, default=int(1*10e6))
     args = parser.parse_args()
     logger.configure()
     set_global_seeds(args.seed)
