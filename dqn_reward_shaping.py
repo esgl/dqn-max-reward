@@ -82,7 +82,7 @@ def learning_reward_shaping(
         final_p=exploration_final_eps
     )
     gamma_shape = LinearSchedule(
-        schedule_timesteps=max_timesteps,
+        schedule_timesteps=int(max_timesteps * 0.5),
         initial_p=gamma_shape_reward,
         final_p=0.
     )
@@ -125,7 +125,8 @@ def learning_reward_shaping(
                 replay_buffer.add(obs, action, reward, new_obs, float(done))
                 gamma_shape_t = gamma_shape.value(t)
                 # reward = round((1 - gamma_shape_reward) * reward, 5)
-                reward = round((1 - gamma_shape_t) * reward, 5)
+                # reward = round((1 - gamma_shape_t) * reward, 5)
+                # gamma_shape_length = np.min([10, len(episode)])
                 for i in range(len(episode) - 1):
                     obs_tmp, action_tmp, rew_tmp, new_obs_tmp, done_tmp = episode[len(episode) - i - 1]
                     # reward = round(reward * gamma_shape_reward, 5)
