@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5de96b6a-f9ec-4a3e-8f26-979764c53d23" name="Default" comment="2">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dqn_reward_shaping_v1_1.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dqn_reward_shaping.py" afterPath="$PROJECT_DIR$/dqn_reward_shaping.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -82,11 +83,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="dqn_reward_shaping.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="dqn_reward_shaping.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dqn_reward_shaping.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="385">
-                  <caret line="134" column="36" lean-forward="false" selection-start-line="134" selection-start-column="36" selection-end-line="134" selection-end-column="36" />
+                <state relative-caret-position="367">
+                  <caret line="133" column="46" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#37#0" expanded="true" />
                   </folding>
@@ -107,8 +108,20 @@
           <file leaf-file-name="dqn_learning_max_action_reward.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dqn_learning_max_action_reward.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1188">
+                <state relative-caret-position="623">
                   <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
+                  <folding>
+                    <element signature="e#0#37#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="dqn_reward_shaping_v1_1.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/dqn_reward_shaping_v1_1.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="299">
+                  <caret line="134" column="36" lean-forward="false" selection-start-line="134" selection-start-column="36" selection-end-line="134" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#37#0" expanded="true" />
                   </folding>
@@ -158,6 +171,7 @@
         <option value="$PROJECT_DIR$/ReplayBuffer_MaxReward.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/dqn_reward_shaping.py" />
+        <option value="$PROJECT_DIR$/dqn_reward_shaping_v1_1.py" />
       </list>
     </option>
   </component>
@@ -494,7 +508,7 @@
     <frame x="65" y="-4" width="1215" height="1028" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07356715" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37724552" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -815,16 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dqn_learning_max_action_reward.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
-          <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ReplayBuffer_MaxReward.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -888,9 +892,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dqn_learning_max_action_reward.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="66" column="35" lean-forward="false" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dqn_reward_shaping.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
+        <state relative-caret-position="367">
+          <caret line="133" column="46" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dqn_reward_shaping_v1_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
           <caret line="134" column="36" lean-forward="false" selection-start-line="134" selection-start-column="36" selection-end-line="134" selection-end-column="36" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
