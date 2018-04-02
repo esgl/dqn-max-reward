@@ -132,6 +132,7 @@ def learning_reward_shaping(
                     # reward = round(reward * gamma_shape_reward, 5)
                     reward = round(reward * gamma_shape_t, 5)
                     rew_tmp = rew_tmp + reward
+                    reward = rew_tmp
                     replay_buffer.add(obs_tmp, action_tmp, rew_tmp, new_obs_tmp, float(done))
                 episode = []
             obs = new_obs
